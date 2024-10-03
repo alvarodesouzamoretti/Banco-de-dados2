@@ -1,0 +1,70 @@
+create database loja_aleatoria;
+use loja_aleatoria;
+create table cliente(
+id_cliente int not null auto_increment,
+nome varchar(35), 
+endereco varchar(30),
+telefone char (11),
+e_mail varchar(100),
+data_nasc date, 
+primary key (id_cliente)
+);
+
+insert into cliente (nome, endereco, telefone, e_mail, data_nasc) values
+("Lucas", "rua das roasa","4388-3892", "lucas@gailm", "2003-03-31");
+desc cliente;
+select * from cliente; 
+
+create table vendas (
+id_vendas int not null auto_increment,
+cod_cli int,
+total decimal (15,2),
+data_de_venda date, 
+hora time,
+primary key (id_vendas)
+); 
+alter table vendas add foreign key (cod_cli) references cliente (id_cliente); 
+ 
+ drop table vendas; 
+ desc vendas;
+ 
+create table distribuidores(
+id_distribuidores int not null auto_increment, 
+nome_fantasia varchar(30),
+razao_social varchar (30),
+telefone char (10),
+e_mail varchar (100),
+primary key (id_distribuidores)
+);
+
+desc distribuidores;
+
+create table produto(
+id_produto int not null auto_increment,
+cod_disd int,
+descricao varchar (60),
+preco_venda decimal (15,2),
+preco_custo decimal (15,2),
+estoque smallint,
+data_validade date,
+primary key (id_produto)
+);
+drop table produto;
+alter table produto add foreign key (cod_disd) references distribuidores (id_distribuidores);
+desc produto;
+
+create table itens_venda(
+id_itens_venda int not null auto_increment, 
+quantidade smallint,
+subtotal decimal, 
+cod_venda int, 
+cod_prod  int,
+primary key (id_itens_venda)
+);
+drop table itens_venda;
+alter table itens_venda add foreign key (cod_venda) references vendas (id_vendas);
+alter table itens_venda add foreign key (cod_prod) references produto (id_produto);
+desc itens_venda
+
+
+
